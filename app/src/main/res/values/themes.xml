@@ -25,7 +25,12 @@
     </style>
 
     <style name="MyStyleFloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="chipStyle">@style/MyChipStyle</item>
         <item name="tint">@color/red_600</item>
+    </style>
+
+    <style name="MyChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+
     </style>
 
     <style name="MyStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">

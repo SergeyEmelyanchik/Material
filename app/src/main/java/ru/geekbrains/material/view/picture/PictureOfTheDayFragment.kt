@@ -5,11 +5,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import coil.load
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.chip.Chip
 import ru.geekbrains.material.R
 import ru.geekbrains.material.databinding.FragmentPictureOfTheDayBinding
 import ru.geekbrains.material.view.MainActivity
@@ -18,8 +21,9 @@ import ru.geekbrains.material.viewmodel.PictureOfTheDayViewModel
 
 class PictureOfTheDayFragment : Fragment() {
 
+    var isMain = true
     private var _binding: FragmentPictureOfTheDayBinding? = null
-    val binding: FragmentPictureOfTheDayBinding
+    private val binding: FragmentPictureOfTheDayBinding
         get() = _binding!!
 
     override fun onCreateView(
@@ -95,6 +99,53 @@ class PictureOfTheDayFragment : Fragment() {
         })
         (requireActivity() as MainActivity).setSupportActionBar(binding.bottomAppBar)
         setHasOptionsMenu(true)
+        binding.fab.setOnClickListener {
+            if (isMain) {
+                binding.bottomAppBar.navigationIcon = null
+                binding.bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
+                binding.fab.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_back_fab
+                    )
+                )
+                // TODO HW  binding.bottomAppBar.replaceMenu(// R.menu. какое-то другое меню)
+            } else {
+                binding.bottomAppBar.navigationIcon = (ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.ic_hamburger_menu_bottom_bar
+                ))
+                binding.bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
+                binding.fab.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_plus_fab
+                    )
+                )
+                // TODO HW binding.bottomAppBar.replaceMenu(R.menu.menu_bottom_bar)
+            }
+            isMain = !isMain
+        }
+
+
+        binding.chipGroup.setOnCheckedChangeListener { group, position ->
+            /* TODO HW
+             when(position){
+                1->{viewModel.sendRequestToday()}
+                2->{viewModel.sendRequestYT()}
+                3->{viewModel.sendRequestTDBY()}
+            }
+
+            when(position){
+                1->{viewModel.sendRequest(date)}
+                2->{viewModel.sendRequest(date-1)}
+                3->{viewModel.sendRequest(date-2)}
+                }
+                */
+            group.findViewById<Chip>(position)?.let {
+                Log.d("@@@", "${it.text.toString()} $position")
+            }
+        }
     }
 
 
@@ -103,7 +154,8 @@ class PictureOfTheDayFragment : Fragment() {
             is PictureOfTheDayAppState.Error -> {}
             is PictureOfTheDayAppState.Loading -> {}
             is PictureOfTheDayAppState.Success -> {
-                binding.imageView.load(pictureOfTheDayAppState.pictureOfTheDayResponseData.url)
+                binding.imageView.load(pictureOfTheDayAppState.pictureOfTheDayResponseData.url){
+                }
                 binding.lifeHack.title.text =
                     pictureOfTheDayAppState.pictureOfTheDayResponseData.title
                 // TODO HW скрасить ожидание картинки
