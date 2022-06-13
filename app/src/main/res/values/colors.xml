@@ -14,4 +14,6 @@
     <color name="red_700">#D72A2A</color>
     <color name="red_800">#C82424</color>
     <color name="red_900">#AE0B0B</color>
+    <color name="color_gray">#66000000</color>
+    <color name="background">#B0BAE6</color>
 </resources>
