@@ -11,36 +11,47 @@ import ru.geekbrains.material.repository.PictureOfTheDayResponseData
 import ru.geekbrains.material.repository.PictureOfTheDayRetrofitImpl
 
 class PictureOfTheDayViewModel(
-    private val liveData: MutableLiveData<PictureOfTheDayAppState> = MutableLiveData(),
-    private val pictureOfDayRetrofitImp: PictureOfTheDayRetrofitImpl = PictureOfTheDayRetrofitImpl()
-) : ViewModel() {
+    private val liveDataForViewToObserve: MutableLiveData<PictureOfTheDayAppState> = MutableLiveData(),
+    private val retrofitImpl: PictureOfTheDayRetrofitImpl = PictureOfTheDayRetrofitImpl()
     fun getLiveData(): LiveData<PictureOfTheDayAppState> {
-        return liveData
+    return liveDataForViewToObserve
+}
+fun sendServerRequest() {
+    liveDataForViewToObserve.value = PictureOfTheDayAppState.Loading(0)
+    val apiKey: String = BuildConfig.NASA_API_KEY
+    if (apiKey.isBlank()) {
+        liveDataForViewToObserve.value = PictureOfTheDayAppState.Error(Throwable("wrong key"))
+    } else {
+        retrofitImpl.getRetrofit().getPictureOfTheDay(apiKey).enqueue(callback)
     }
+}
 
-    fun sendRequest() {
-        liveData.postValue(PictureOfTheDayAppState.Loading(null))
-        // TODO HW проверить на наличие BuildConfig.NASA_API_KEY
-        pictureOfDayRetrofitImp.getRetrofit().getPictureOfTheDay(BuildConfig.NASA_API_KEY)
-            .enqueue(callback)
+fun sendServerRequest(date: String) {
+    liveDataForViewToObserve.value = PictureOfTheDayAppState.Loading(0)
+    val apiKey: String = BuildConfig.NASA_API_KEY
+    if (apiKey.isBlank()) {
+        liveDataForViewToObserve.value = PictureOfTheDayAppState.Error(Throwable("wrong key"))
+    } else {
+        retrofitImpl.getRetrofit().getPictureOfTheDay(apiKey, date).enqueue(callback)
     }
+}
 
-    private val callback = object : Callback<PictureOfTheDayResponseData> {
-        override fun onResponse(
-            call: Call<PictureOfTheDayResponseData>,
-            response: Response<PictureOfTheDayResponseData>
-        ) {
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    liveData.postValue(PictureOfTheDayAppState.Success(it))
-                }
-            } else {
-                // TODO HW
+private val callback = object : Callback<PictureOfTheDayResponseData> {
+    override fun onResponse(
+        call: Call<PictureOfTheDayResponseData>,
+        response: Response<PictureOfTheDayResponseData>
+    ) {
+        if (response.isSuccessful) {
+            response.body()?.let {
+                liveDataForViewToObserve.postValue(PictureOfTheDayAppState.Success(it))
             }
-        }
-
-        override fun onFailure(call: Call<PictureOfTheDayResponseData>, t: Throwable) {
+        } else {
             // TODO HW
         }
     }
+
+    override fun onFailure(call: Call<PictureOfTheDayResponseData>, t: Throwable) {
+        // TODO HW
+    }
+}
 }
