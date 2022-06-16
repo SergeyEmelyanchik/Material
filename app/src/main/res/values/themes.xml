@@ -5,7 +5,6 @@
         <item name="android:navigationBarColor">?superColor</item>
         <item name="colorPrimary">?superColor</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
         <item name="colorPrimaryContainer">?superColor</item>
         <item name="colorOnPrimaryContainer">?superColor</item>
         <item name="colorPrimaryInverse">?superColor</item>
@@ -18,29 +17,25 @@
         <item name="colorTertiaryContainer">?superColor</item>
         <item name="colorOnTertiaryContainer">?superColor</item>
         <!-- Status bar color. -->
-        <item name="floatingActionButtonStyle">@style/MyStyleFloatingActionButton</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
         <item name="textInputStyle">@style/MyStyle</item>
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="floatingActionButtonStyle">@style/MyStyleFloatingActionButton</item>
         <item name="chipStyle">@style/MyChipStyle</item>
         <item name="tabStyle">@style/MyTabStyle</item>
+
         <item name="textAppearanceBody2">@style/MyTextAppearance</item>
         <item name="shapeAppearanceSmallComponent">@style/MySmallShape</item>
+        <item name="shapeAppearanceMediumComponent">@style/MyMediumShape</item>
+
     </style>
 
     <style name="MyRedTheme" parent="MyBaseTheme">
         <item name="superColor">@color/red</item>
     </style>
-
-
     <style name="MyGreenTheme" parent="MyBaseTheme">
         <item name="superColor">@color/green</item>
     </style>
-
-    <style name="MyChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
-
-    </style>
-
     <style name="MyBlueTheme" parent="MyBaseTheme">
         <item name="superColor">@color/blue</item>
     </style>

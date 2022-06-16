@@ -32,4 +32,9 @@
         <item name="cornerFamily">rounded</item>
     </style>
 
+    <style name="MyMediumShape" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerSize">50dp</item>
+        <item name="cornerFamily">cut</item>
+    </style>
+
 </resources>
