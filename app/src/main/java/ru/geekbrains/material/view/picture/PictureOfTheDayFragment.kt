@@ -16,6 +16,7 @@ import com.google.android.material.chip.Chip
 import ru.geekbrains.material.R
 import ru.geekbrains.material.databinding.FragmentPictureOfTheDayBinding
 import ru.geekbrains.material.view.MainActivity
+import ru.geekbrains.material.view.settings.SettingsFragment
 import ru.geekbrains.material.viewmodel.PictureOfTheDayAppState
 import ru.geekbrains.material.viewmodel.PictureOfTheDayViewModel
 import java.text.SimpleDateFormat
@@ -53,6 +54,8 @@ class PictureOfTheDayFragment : Fragment() {
             }
             R.id.app_bar_settings -> {
                 Log.d("@@@", "app_bar_settings")
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, SettingsFragment.newInstance()).commit()
             }
             android.R.id.home -> {
                 BottomNavigationDrawerFragment.newInstance()
@@ -81,7 +84,7 @@ class PictureOfTheDayFragment : Fragment() {
         }
 
         val bottomSheetBehavior = BottomSheetBehavior.from(binding.lifeHack.bottomSheetContainer)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {

@@ -1,42 +1,46 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Material" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="MyBaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="android:navigationBarColor">@color/red_500</item>
-        <item name="colorPrimary">@color/red_600</item>
+        <item name="android:navigationBarColor">?superColor</item>
+        <item name="colorPrimary">?superColor</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorPrimaryContainer">@color/red_100</item>
-        <item name="colorOnPrimaryContainer">@color/red_900</item>
-        <item name="colorPrimaryInverse">@color/red_200</item>
-        <item name="colorSecondary">@color/red_600</item>
+        <item name="colorPrimaryContainer">?superColor</item>
+        <item name="colorOnPrimaryContainer">?superColor</item>
+        <item name="colorPrimaryInverse">?superColor</item>
+        <item name="colorSecondary">?superColor</item>
         <item name="colorOnSecondary">@color/white</item>
-        <item name="colorSecondaryContainer">@color/red_100</item>
-        <item name="colorOnSecondaryContainer">@color/red_900</item>
-        <item name="colorTertiary">@color/red_600</item>
+        <item name="colorSecondaryContainer">?superColor</item>
+        <item name="colorOnSecondaryContainer">?superColor</item>
+        <item name="colorTertiary">?superColor</item>
         <item name="colorOnTertiary">@color/white</item>
-        <item name="colorTertiaryContainer">@color/red_100</item>
-        <item name="colorOnTertiaryContainer">@color/red_900</item>
+        <item name="colorTertiaryContainer">?superColor</item>
+        <item name="colorOnTertiaryContainer">?superColor</item>
         <!-- Status bar color. -->
         <item name="floatingActionButtonStyle">@style/MyStyleFloatingActionButton</item>
         <!-- Customize your theme here. -->
         <item name="textInputStyle">@style/MyStyle</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="chipStyle">@style/MyChipStyle</item>
+        <item name="tabStyle">@style/MyTabStyle</item>
+        <item name="textAppearanceBody2">@style/MyTextAppearance</item>
     </style>
 
-    <style name="MyStyleFloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
-        <item name="chipStyle">@style/MyChipStyle</item>
-        <item name="tint">@color/red_600</item>
+    <style name="MyRedTheme" parent="MyBaseTheme">
+        <item name="superColor">@color/red</item>
+    </style>
+
+
+    <style name="MyGreenTheme" parent="MyBaseTheme">
+        <item name="superColor">@color/green</item>
     </style>
 
     <style name="MyChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
 
     </style>
 
-    <style name="MyStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">#034AFF</item>
-        <item name="helperTextEnabled">false</item>
-        <item name="counterEnabled">false</item>
-        <item name="errorTextColor">#034AFF</item>
+    <style name="MyBlueTheme" parent="MyBaseTheme">
+        <item name="superColor">@color/blue</item>
     </style>
 </resources>
