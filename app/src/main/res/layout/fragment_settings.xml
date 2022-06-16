@@ -38,24 +38,30 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.tabs.TabItem
-            android:tag="one"
             android:layout_width="wrap_content"
             android:layout_height="?actionBarSize"
+            android:tag="one"
             android:text="@string/menu_one" />
 
         <com.google.android.material.tabs.TabItem
-            android:tag="two"
             android:layout_width="wrap_content"
             android:layout_height="?actionBarSize"
+            android:tag="two"
             android:text="@string/menu_two" />
 
         <com.google.android.material.tabs.TabItem
-            android:tag="three"
             android:layout_width="wrap_content"
             android:layout_height="?actionBarSize"
+            android:tag="three"
             android:text="@string/menu_three" />
     </com.google.android.material.tabs.TabLayout>
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="20dp"
+        app:cardBackgroundColor="#FF424242" />
 
 
 </LinearLayout>
