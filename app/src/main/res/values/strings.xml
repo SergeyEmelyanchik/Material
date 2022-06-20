@@ -16,4 +16,8 @@
     <string name="menu_one">Меню 1</string>
     <string name="menu_two">Меню 2</string>
     <string name="menu_three">Меню 3</string>
+    <string name="three">3</string>
+    <string name="two">2</string>
+    <string name="one">1</string>
+    <string name="point">..</string>
 </resources>
