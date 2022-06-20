@@ -27,6 +27,7 @@
         <item name="textAppearanceBody2">@style/MyTextAppearance</item>
         <item name="shapeAppearanceSmallComponent">@style/MySmallShape</item>
         <item name="shapeAppearanceMediumComponent">@style/MyMediumShape</item>
+        <item name="bottomNavigationStyle">@style/MyBottomNavigationView</item>
 
     </style>
 

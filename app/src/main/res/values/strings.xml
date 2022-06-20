@@ -20,4 +20,7 @@
     <string name="two">2</string>
     <string name="one">1</string>
     <string name="point">..</string>
+    <string name="earth">Earth</string>
+    <string name="mars">Mars</string>
+    <string name="system">System</string>
 </resources>
