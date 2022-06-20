@@ -7,7 +7,9 @@
         <item name="itemIconTint">@drawable/my_navigation_bar_item_tint</item>
         <item name="itemTextColor">@drawable/my_navigation_bar_item_tint</item>
         <item name="itemRippleColor">@drawable/my_ripple</item>
+        <item name="itemIconSize">@dimen/bottom_navigation_icon_size</item>
         <item name="backgroundTint">@color/black</item>
+        <item name="textAppearanceBody2">@style/MyTextAppearance</item>
 
     </style>
 
@@ -51,4 +53,7 @@
         <item name="cornerFamily">cut</item>
     </style>
 
+    <style name="MyTabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="android:background">?colorSecondary</item>
+    </style>
 </resources>

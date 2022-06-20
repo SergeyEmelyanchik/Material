@@ -35,9 +35,16 @@
         <item name="superColor">@color/red</item>
     </style>
     <style name="MyGreenTheme" parent="MyBaseTheme">
-        <item name="superColor">@color/green</item>
+        <item name="superColor">@color/green_900</item>
+        <item name="superColorPrimary">@color/green_900</item>
+        <item name="superColorSecondary">@color/green_500</item>
+        <item name="superColorOnPrimary">@color/green_200</item>
+        <item name="superColorOnSecondary">@color/green_700</item>
     </style>
     <style name="MyBlueTheme" parent="MyBaseTheme">
         <item name="superColor">@color/blue</item>
+        <item name="superColorPrimary">@color/blue_700</item>
+        <item name="superColorSecondary">@color/blue_500</item>
+        <item name="superColorOnPrimary">@color/blue_200</item>
     </style>
 </resources>
