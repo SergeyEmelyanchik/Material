@@ -57,7 +57,13 @@
 
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/buttons"
+        android:id="@+id/buttons1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="materialButton1,materialButton2,materialButton3"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/buttons2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="materialButton1,materialButton2,materialButton3" />
