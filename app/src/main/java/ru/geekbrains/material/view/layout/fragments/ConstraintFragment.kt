@@ -25,6 +25,7 @@ class ConstraintFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // binding.buttons.visibility= View.GONE
     }
 
 
