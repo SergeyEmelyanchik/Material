@@ -23,5 +23,7 @@
     <string name="earth">Earth</string>
     <string name="mars">Mars</string>
     <string name="system">System</string>
+    <string name="thirty_three">33%</string>
+    <string name="fifty">50%</string>
 
 </resources>
