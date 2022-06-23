@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import ru.geekbrains.material.R
 import ru.geekbrains.material.databinding.ActivityLayoutBinding
-import ru.geekbrains.material.view.layout.fragments.ConstraintFragment
-import ru.geekbrains.material.view.layout.fragments.CoordinatorFragment
-import ru.geekbrains.material.view.layout.fragments.MotionFragment
+import ru.geekbrains.material.view.layout.constraint.ConstraintFragment
+import ru.geekbrains.material.view.layout.coordinator.CoordinatorFragment
+import ru.geekbrains.material.view.layout.motion.MotionFragment
 
 class LayoutActivity : AppCompatActivity() {
 
@@ -26,7 +26,7 @@ class LayoutActivity : AppCompatActivity() {
                     navigationTo(ConstraintFragment())
                     true
                 }
-                R.id.action_bottom_navigation_constraint -> {
+                R.id.action_bottom_navigation_coordinator -> {
                     navigationTo(CoordinatorFragment())
                     true
                 }
@@ -37,7 +37,7 @@ class LayoutActivity : AppCompatActivity() {
                 else -> true
             }
         }
-        binding.bottomNavigationView.selectedItemId = R.id.action_bottom_navigation_constraint
+        binding.bottomNavigationView.selectedItemId = R.id.action_bottom_navigation_coordinator
     }
 
     private fun navigationTo(f: Fragment) {

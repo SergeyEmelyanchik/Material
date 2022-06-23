@@ -1,37 +1,36 @@
-package ru.geekbrains.material.view.layout.fragments
+package ru.geekbrains.material.view.layout.coordinator
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import ru.geekbrains.material.databinding.FragmentConstraintBinding
+import ru.geekbrains.material.databinding.FragmentCoordinatorBinding
 
-class ConstraintFragment : Fragment() {
+class CoordinatorFragment : Fragment() {
 
 
-    private var _binding: FragmentConstraintBinding? = null
-    private val binding: FragmentConstraintBinding
+    private var _binding: FragmentCoordinatorBinding? = null
+    private val binding: FragmentCoordinatorBinding
         get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentConstraintBinding.inflate(inflater, container, false)
+        _binding = FragmentCoordinatorBinding.inflate(inflater, container, false)
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // binding.buttons.visibility= View.GONE
     }
 
 
     companion object {
         @JvmStatic
-        fun newInstance() = ConstraintFragment()
+        fun newInstance() = CoordinatorFragment()
     }
 
     override fun onDestroy() {
