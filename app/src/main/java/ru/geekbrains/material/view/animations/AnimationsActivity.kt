@@ -1,5 +1,8 @@
 package ru.geekbrains.material.view.animations
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.Gravity
@@ -17,33 +20,77 @@ import ru.geekbrains.material.R
 import ru.geekbrains.material.databinding.ActivityAnimationsBinding
 import ru.geekbrains.material.databinding.ActivityAnimationsBonusStartBinding
 import ru.geekbrains.material.databinding.ActivityAnimationsNewBinding
+import ru.geekbrains.material.databinding.ActivityAnimationsRotateFabBinding
 
 class AnimationsActivity : AppCompatActivity() {
 
-    private val duration: Long = 1000
-    var isOpen: Boolean = false
-    private lateinit var binding: ActivityAnimationsNewBinding
+    val duration = 1000L
+    lateinit var binding: ActivityAnimationsRotateFabBinding
+    var flag = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAnimationsNewBinding.inflate(layoutInflater)
+        binding = ActivityAnimationsRotateFabBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.fab.setOnClickListener {
+            flag = !flag
+            if (flag) {
+                ObjectAnimator.ofFloat(binding.plusImageview, View.ROTATION, 0f, 405f)
+                    .setDuration(duration).start()
+                ObjectAnimator.ofFloat(binding.optionOneContainer, View.TRANSLATION_Y, -50f, -260f)
+                    .setDuration(duration).start()
+                ObjectAnimator.ofFloat(binding.optionTwoContainer, View.TRANSLATION_Y, -20f, -130f)
+                    .setDuration(duration).start()
 
-        val constraintSetStart = ConstraintSet()
-        val constraintSetEnd = ConstraintSet()
-        constraintSetStart.clone(this, R.layout.include_fab_animations_start)
-        constraintSetEnd.clone(this, R.layout.include_fab_animations_end)
-        binding.anim.fabCenter.setOnClickListener {
+                binding.optionOneContainer.animate()
+                    .alpha(1f)
+                    .setDuration(duration / 2)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            super.onAnimationEnd(animation)
+                            binding.optionOneContainer.isClickable = true
+                        }
+                    })
+                binding.optionTwoContainer.animate()
+                    .alpha(1f)
+                    .setDuration(duration / 2)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            super.onAnimationEnd(animation)
+                            binding.optionTwoContainer.isClickable = true
+                        }
+                    })
 
-
-            isOpen = !isOpen
-            if (isOpen) {
-                constraintSetStart.applyTo(binding.anim.container)
-                //    constraintSet.connect(R.id.title,ConstraintSet.RIGHT,R.id.backgroundImage,ConstraintSet.RIGHT) // через код
-                // constraintSet.clone(this, R.layout.activity_animations_bonus_end)  // через макет
+                binding.transparentBackground.animate()
+                    .alpha(0.5f)
+                    .setDuration(duration)
             } else {
-                constraintSetEnd.applyTo(binding.anim.container)
-                //    constraintSet.connect(R.id.title,ConstraintSet.RIGHT,R.id.backgroundImage,ConstraintSet.LEFT)     // через код
-                // constraintSet.clone(this, R.layout.activity_animations_bonus_start) // через макет
+                ObjectAnimator.ofFloat(binding.plusImageview, View.ROTATION, 405f, 0f)
+                    .setDuration(duration).start()
+                ObjectAnimator.ofFloat(binding.optionOneContainer, View.TRANSLATION_Y, -260f, -50f)
+                    .setDuration(duration).start()
+                ObjectAnimator.ofFloat(binding.optionTwoContainer, View.TRANSLATION_Y, -130f, -20f)
+                    .setDuration(duration).start()
+                binding.optionOneContainer.animate()
+                    .alpha(0f)
+                    .setDuration(duration / 2)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            super.onAnimationEnd(animation)
+                            binding.optionOneContainer.isClickable = false
+                        }
+                    })
+                binding.optionTwoContainer.animate()
+                    .alpha(0f)
+                    .setDuration(duration / 2)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            super.onAnimationEnd(animation)
+                            binding.optionTwoContainer.isClickable = false
+                        }
+                    })
+                binding.transparentBackground.animate()
+                    .alpha(0f)
+                    .setDuration(duration)
             }
         }
     }
