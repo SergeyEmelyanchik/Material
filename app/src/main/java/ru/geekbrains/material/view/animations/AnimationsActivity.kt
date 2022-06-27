@@ -16,6 +16,7 @@ import ru.geekbrains.material.databinding.ActivityAnimationsBinding
 
 class AnimationsActivity : AppCompatActivity() {
 
+    private val duration: Long = 1000
     var isOpen: Boolean = false
     private lateinit var binding: ActivityAnimationsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,20 +24,10 @@ class AnimationsActivity : AppCompatActivity() {
         binding = ActivityAnimationsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.button.setOnClickListener {
-            isOpen = !isOpen
-            val transition = ChangeBounds()
-            val path = ArcMotion()
-            transition.setPathMotion(path)
-            transition.duration = 3000
-            TransitionManager.beginDelayedTransition(binding.root, transition)
-            val params = (binding.button.layoutParams as FrameLayout.LayoutParams)
-            params.gravity = if (isOpen) {
-                Gravity.BOTTOM or Gravity.END
-            } else {
-                Gravity.TOP or Gravity.START
-            }
-            binding.button.layoutParams = params
+        /*binding.header.isSelected = true
+        binding.header.isSelected = false*/
+        binding.scrollView.setOnScrollChangeListener { _, _, _, _, _ ->
+            binding.header.isSelected = binding.scrollView.canScrollVertically(-1)
         }
     }
 }
