@@ -16,26 +16,26 @@ class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemCli
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
-    private lateinit var list: MutableList<Data>
+    private lateinit var list: MutableList<Pair<Data, Boolean>>
 
 
-    fun setList(newList: List<Data>) {
+    fun setList(newList: List<Pair<Data, Boolean>>) {
         this.list = newList.toMutableList()
     }
 
-    fun setAddToList(newList: List<Data>, position: Int) {
+    fun setAddToList(newList: List<Pair<Data, Boolean>>, position: Int) {
         this.list = newList.toMutableList()
         notifyItemChanged(position)
     }
 
-    fun setRemoveToList(newList: List<Data>, position: Int) {
+    fun setRemoveToList(newList: List<Pair<Data, Boolean>>, position: Int) {
         this.list = newList.toMutableList()
         notifyItemRemoved(position)
     }
 
 
     override fun getItemViewType(position: Int): Int {
-        return list[position].type
+        return list[position].first.type
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -83,7 +83,7 @@ class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemCli
     }
 
     class EarthViewHolder(view: View) : RecyclerView.ViewHolder(view) { // TODO WH :BaseViewHolder
-        fun myBind(data: Data) {
+        fun myBind(listItem: Pair<Data, Boolean>) {
             /*(itemView as ConstraintLayout).findViewById<TextView>(R.id.title).text = data.someText
             (itemView as ConstraintLayout).findViewById<TextView>(R.id.descriptionTextView).text = data.someDescription*/
 
@@ -92,25 +92,25 @@ class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemCli
             binding.descriptionTextView.text = data.someDescription*/
 
             (ActivityRecyclerItemEarthBinding.bind(itemView)).apply {
-                title.text = data.someText
-                descriptionTextView.text = data.someDescription
+                title.text = listItem.first.someText
+                descriptionTextView.text = listItem.first.someDescription
             }
         }
     }
 
     class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) { // TODO WH :BaseViewHolder
-        fun myBind(data: Data) {
+        fun myBind(listItem: Pair<Data, Boolean>) {
             (ActivityRecyclerItemHeaderBinding.bind(itemView)).apply {
-                header.text = data.someText
+                header.text = listItem.first.someText
             }
         }
     }
 
     inner class MarsViewHolder(view: View) :
         RecyclerView.ViewHolder(view) { // TODO WH :BaseViewHolder
-        fun myBind(data: Data) {
+        fun myBind(listItem: Pair<Data, Boolean>) {
             (ActivityRecyclerItemMarsBinding.bind(itemView)).apply {
-                title.text = data.someText
+                title.text = listItem.first.someText
                 addItemImageView.setOnClickListener {
                     onListItemClickListener.onAddBtnClick(layoutPosition)
                 }
@@ -128,6 +128,15 @@ class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemCli
                         list.add(layoutPosition - 1, this)
                     }
                     notifyItemMoved(layoutPosition, layoutPosition - 1)
+                }
+
+                marsImageView.setOnClickListener {
+                    list[layoutPosition] = list[layoutPosition].let {
+                        it.first to !it.second
+                    }
+                    marsDescriptionTextView.visibility =
+                        if (list[layoutPosition].second) View.VISIBLE else View.GONE
+                    //notifyItemChanged(layoutPosition) // FIXME
                 }
             }
         }
