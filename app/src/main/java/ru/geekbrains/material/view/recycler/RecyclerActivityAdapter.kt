@@ -16,20 +16,20 @@ class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemCli
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
-    private lateinit var list: List<Data>
+    private lateinit var list: MutableList<Data>
 
 
     fun setList(newList: List<Data>) {
-        this.list = newList
+        this.list = newList.toMutableList()
     }
 
     fun setAddToList(newList: List<Data>, position: Int) {
-        this.list = newList
+        this.list = newList.toMutableList()
         notifyItemChanged(position)
     }
 
     fun setRemoveToList(newList: List<Data>, position: Int) {
-        this.list = newList
+        this.list = newList.toMutableList()
         notifyItemRemoved(position)
     }
 
@@ -116,6 +116,18 @@ class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemCli
                 }
                 removeItemImageView.setOnClickListener {
                     onListItemClickListener.onRemoveBtnClick(layoutPosition)
+                }
+                moveItemDown.setOnClickListener { // TODO IndexOutOfBoundsException
+                    list.removeAt(layoutPosition).apply {
+                        list.add(layoutPosition + 1, this)
+                    }
+                    notifyItemMoved(layoutPosition, layoutPosition + 1)
+                }
+                moveItemUp.setOnClickListener { // TODO IndexOutOfBoundsException: Index: -1
+                    list.removeAt(layoutPosition).apply {
+                        list.add(layoutPosition - 1, this)
+                    }
+                    notifyItemMoved(layoutPosition, layoutPosition - 1)
                 }
             }
         }
