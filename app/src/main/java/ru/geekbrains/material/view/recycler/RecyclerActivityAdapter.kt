@@ -5,13 +5,34 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.material.databinding.ActivityRecyclerItemEarthBinding
+import ru.geekbrains.material.databinding.ActivityRecyclerItemHeaderBinding
 import ru.geekbrains.material.databinding.ActivityRecyclerItemMarsBinding
 
 const val TYPE_EARTH = 1
 const val TYPE_MARS = 2
+const val TYPE_HEADER = 3
 
-class RecyclerActivityAdapter(private var list: List<Data>) :
+class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+
+    private lateinit var list: List<Data>
+
+
+    fun setList(newList: List<Data>) {
+        this.list = newList
+    }
+
+    fun setAddToList(newList: List<Data>, position: Int) {
+        this.list = newList
+        notifyItemChanged(position)
+    }
+
+    fun setRemoveToList(newList: List<Data>, position: Int) {
+        this.list = newList
+        notifyItemRemoved(position)
+    }
+
 
     override fun getItemViewType(position: Int): Int {
         return list[position].type
@@ -29,6 +50,11 @@ class RecyclerActivityAdapter(private var list: List<Data>) :
                     ActivityRecyclerItemMarsBinding.inflate(LayoutInflater.from(parent.context))
                 MarsViewHolder(view.root)
             }
+            TYPE_HEADER -> {
+                val view =
+                    ActivityRecyclerItemHeaderBinding.inflate(LayoutInflater.from(parent.context))
+                HeaderViewHolder(view.root)
+            }
             else -> {
                 val view =
                     ActivityRecyclerItemMarsBinding.inflate(LayoutInflater.from(parent.context))
@@ -45,6 +71,9 @@ class RecyclerActivityAdapter(private var list: List<Data>) :
             }
             TYPE_MARS -> {
                 (holder as MarsViewHolder).myBind(list[position])
+            }
+            TYPE_HEADER -> {
+                (holder as HeaderViewHolder).myBind(list[position])
             }
         }
     }
@@ -69,10 +98,25 @@ class RecyclerActivityAdapter(private var list: List<Data>) :
         }
     }
 
-    class MarsViewHolder(view: View) : RecyclerView.ViewHolder(view) { // TODO WH :BaseViewHolder
+    class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) { // TODO WH :BaseViewHolder
+        fun myBind(data: Data) {
+            (ActivityRecyclerItemHeaderBinding.bind(itemView)).apply {
+                header.text = data.someText
+            }
+        }
+    }
+
+    inner class MarsViewHolder(view: View) :
+        RecyclerView.ViewHolder(view) { // TODO WH :BaseViewHolder
         fun myBind(data: Data) {
             (ActivityRecyclerItemMarsBinding.bind(itemView)).apply {
                 title.text = data.someText
+                addItemImageView.setOnClickListener {
+                    onListItemClickListener.onAddBtnClick(layoutPosition)
+                }
+                removeItemImageView.setOnClickListener {
+                    onListItemClickListener.onRemoveBtnClick(layoutPosition)
+                }
             }
         }
     }

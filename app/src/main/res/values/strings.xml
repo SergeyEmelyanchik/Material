@@ -118,5 +118,6 @@
     <string name="tap_on_me">TAP ON ME</string>
     <string name="button">button</string>
     <string name="statelistanimator_example">StateListAnimator Example</string>
+    <string name="title">Заголовок</string>
 
 </resources>
