@@ -7,19 +7,21 @@ import ru.geekbrains.material.databinding.ActivityRecyclerBinding
 
 class RecyclerActivity : AppCompatActivity(), OnListItemClickListener {
 
+    private var isNewList = false
+
 
     lateinit var binding: ActivityRecyclerBinding
     lateinit var adapter: RecyclerActivityAdapter
 
     private val list = arrayListOf(
-        Pair(Data("HEADER", "", TYPE_HEADER), false),
-        Pair(Data("Earth", "Earth des", TYPE_EARTH), false),
-        Pair(Data("Earth", "Earth des", TYPE_EARTH), false),
-        Pair(Data("Mars", "Mars des", TYPE_MARS), false),
-        Pair(Data("Earth", "Earth des", TYPE_EARTH), false),
-        Pair(Data("Earth", "Earth des", TYPE_EARTH), false),
-        Pair(Data("Earth", "Earth des", TYPE_EARTH), false),
-        Pair(Data("Mars", "Mars des", TYPE_MARS), false)
+        Pair(Data(0, "HEADER", "", TYPE_HEADER), false),
+        Pair(Data(1, "Earth", "Earth des", TYPE_EARTH), false),
+        Pair(Data(2, "Earth", "Earth des", TYPE_EARTH), false),
+        Pair(Data(3, "Mars", "Mars des", TYPE_MARS), false),
+        Pair(Data(4, "Earth", "Earth des", TYPE_EARTH), false),
+        Pair(Data(5, "Earth", "Earth des", TYPE_EARTH), false),
+        Pair(Data(6, "Earth", "Earth des", TYPE_EARTH), false),
+        Pair(Data(7, "Mars", "Mars des", TYPE_MARS), false)
     )
 
 
@@ -38,7 +40,7 @@ class RecyclerActivity : AppCompatActivity(), OnListItemClickListener {
         val weather = Triple(lon, lat, temp)
         val weather2 = lon to lat to temp
 
-        adapter = RecyclerActivityAdapter(this)
+        adapter = RecyclerActivityAdapter(list, this)
         adapter.setList(list)
         binding.recyclerView.adapter = adapter
 
@@ -46,6 +48,38 @@ class RecyclerActivity : AppCompatActivity(), OnListItemClickListener {
             onAddBtnClick(list.size)
         }
         ItemTouchHelper(ItemTouchHelperCallback(adapter)).attachToRecyclerView(binding.recyclerView)
+
+        binding.recyclerActivityDiffUtilFAB.setOnClickListener {
+            changeAdapterData()
+        }
+    }
+
+    private fun changeAdapterData() {
+        adapter.setList(createItemList(isNewList).map { it })
+        isNewList = !isNewList
+    }
+
+    private fun createItemList(instanceNumber: Boolean): List<Pair<Data, Boolean>> {
+        return when (instanceNumber) {
+            false -> listOf(
+                Pair(Data(0, "Header"), false),
+                Pair(Data(1, "Mars", ""), false),
+                Pair(Data(2, "Mars", ""), false),
+                Pair(Data(3, "Mars", ""), false),
+                Pair(Data(4, "Mars", ""), false),
+                Pair(Data(5, "Mars", ""), false),
+                Pair(Data(6, "Mars", ""), false)
+            )
+            true -> listOf(
+                Pair(Data(0, "Header"), false),
+                Pair(Data(1, "Mars", ""), false),
+                Pair(Data(2, "Jupiter", ""), false),
+                Pair(Data(3, "Mars", ""), false),
+                Pair(Data(4, "Neptune", ""), false),
+                Pair(Data(5, "Saturn", ""), false),
+                Pair(Data(6, "Mars", ""), false)
+            )
+        }
     }
 
     override fun onItemClick(data: Data) {
@@ -53,7 +87,7 @@ class RecyclerActivity : AppCompatActivity(), OnListItemClickListener {
     }
 
     override fun onAddBtnClick(position: Int) {
-        list.add(position, Pair(Data("Mars", "Mars des", TYPE_MARS), false))
+        list.add(position, Pair(Data(0, "Mars", "Mars des", TYPE_MARS), false))
         adapter.setAddToList(list, position)
     }
 

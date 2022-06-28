@@ -4,7 +4,11 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import ru.geekbrains.material.R
 import ru.geekbrains.material.databinding.ActivityRecyclerItemEarthBinding
 import ru.geekbrains.material.databinding.ActivityRecyclerItemHeaderBinding
 import ru.geekbrains.material.databinding.ActivityRecyclerItemMarsBinding
@@ -13,14 +17,16 @@ const val TYPE_EARTH = 1
 const val TYPE_MARS = 2
 const val TYPE_HEADER = 3
 
-class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemClickListener) :
+class RecyclerActivityAdapter(
+    private var list: MutableList<Pair<Data, Boolean>>,
+    private var onListItemClickListener: OnListItemClickListener
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), ItemTouchHelperAdapter {
 
 
-    private lateinit var list: MutableList<Pair<Data, Boolean>>
-
-
     fun setList(newList: List<Pair<Data, Boolean>>) {
+        val result = DiffUtil.calculateDiff(DiffUtilCallback(list, newList))
+        result.dispatchUpdatesTo(this)
         this.list = newList.toMutableList()
     }
 
@@ -64,6 +70,32 @@ class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemCli
         }
 
     }
+
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            when (getItemViewType(position)) { // TODO WH создать BaseViewHolder
+                TYPE_EARTH -> {
+                    //(holder as EarthViewHolder).itemView.findViewById<TextView>(R.id.title).text =
+                }
+                TYPE_MARS -> {
+                    val res = createCombinedPayload(payloads as List<Change<Pair<Data, Boolean>>>)
+                    if (res.oldData.first.someText != res.newData.first.someText)
+                        (holder as MarsViewHolder).itemView.findViewById<TextView>(R.id.title).text =
+                            res.newData.first.someText
+                }
+                TYPE_HEADER -> {
+                    // (holder as HeaderViewHolder).myBind(list[position])
+                }
+            }
+        }
+    }
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) { // TODO WH создать BaseViewHolder
@@ -112,6 +144,7 @@ class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemCli
         fun myBind(listItem: Pair<Data, Boolean>) {
             (ActivityRecyclerItemMarsBinding.bind(itemView)).apply {
                 title.text = listItem.first.someText
+                marsImageView.load(R.drawable.bg_mars)
                 addItemImageView.setOnClickListener {
                     onListItemClickListener.onAddBtnClick(layoutPosition)
                 }
