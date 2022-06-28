@@ -26,6 +26,11 @@
     <string name="earth" translatable="false">Earth</string>
     <string name="mars" translatable="false">Mars</string>
     <string name="system" translatable="false">System</string>
+
+    <!--    FIXME -->
+    <string name="test_html" translatable="false">My text <ul><li>bullet one</li><li>bullet two</li></ul></string>
+
+
     <string name="large_text" translatable="false">"Material is the metaphor.\n\n"
 
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."

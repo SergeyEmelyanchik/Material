@@ -1,8 +1,16 @@
 package ru.geekbrains.material.view.picture
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.SpannedString
+import android.text.style.BulletSpan
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.*
 import androidx.core.content.ContextCompat
@@ -84,7 +92,7 @@ class PictureOfTheDayFragment : Fragment() {
         }
 
         val bottomSheetBehavior = BottomSheetBehavior.from(binding.lifeHack.bottomSheetContainer)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -160,11 +168,80 @@ class PictureOfTheDayFragment : Fragment() {
             is PictureOfTheDayAppState.Error -> {}
             is PictureOfTheDayAppState.Loading -> {}
             is PictureOfTheDayAppState.Success -> {
-                binding.imageView.load(pictureOfTheDayAppState.pictureOfTheDayResponseData.url){
+                binding.imageView.load(pictureOfTheDayAppState.pictureOfTheDayResponseData.url) {
                 }
                 binding.lifeHack.title.text =
                     pictureOfTheDayAppState.pictureOfTheDayResponseData.title
                 // TODO HW скрасить ожидание картинки
+                binding.lifeHack.title.typeface =
+                    Typeface.createFromAsset(requireActivity().assets, "level1/level2/azeret.ttf")
+                binding.lifeHack.explanation.text =
+                    pictureOfTheDayAppState.pictureOfTheDayResponseData.explanation
+
+
+                // val text = requireActivity().resources.getText(R.string.test_html).toString()
+                val text = "My text <ul><li>bullet one</li><li>bullet two</li>"
+                binding.lifeHack.explanation.text = Html.fromHtml(text)
+                val textSpannable = "My text \nbullet one \nbullet two"
+
+
+                val spannedString: SpannedString
+                val spannableString: SpannableString = SpannableString(textSpannable)
+                val spannableStringBuilder: SpannableStringBuilder
+
+                /*val split = textSpannable.split("\n").toMutableList()
+                repeat(split.size){
+                    if(it>0)
+                    split[it] = "/n${split[it]}"
+                }*/
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+
+                    /* var counter = 0
+                     split.forEach {
+                         val startPosition = counter
+                         val endPosition = counter+it.length
+                         spannableString.setSpan(BulletSpan(20, ContextCompat.getColor(requireContext(),R.color.red_700),10),
+                             counter,counter+it.length,SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE)
+                         counter+=it.length
+                     }*/
+
+
+
+
+                    spannableString.setSpan(
+                        BulletSpan(
+                            20,
+                            ContextCompat.getColor(requireContext(), R.color.red_700),
+                            10
+                        ),
+                        9, 18, SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    spannableString.setSpan(
+                        BulletSpan(
+                            20,
+                            ContextCompat.getColor(requireContext(), R.color.red_700),
+                            10
+                        ),
+                        21, textSpannable.length, SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                } else {
+                    spannableString.setSpan(
+                        BulletSpan(20, ContextCompat.getColor(requireContext(), R.color.red_700)),
+                        9, 19, SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+
+                spannableString.setSpan(
+                    ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.red_700)),
+                    8, 19, SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+
+                spannableString.setSpan(
+                    ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.blue)),
+                    21, textSpannable.length, SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                binding.lifeHack.explanation.text = spannableString
             }
         }
     }
