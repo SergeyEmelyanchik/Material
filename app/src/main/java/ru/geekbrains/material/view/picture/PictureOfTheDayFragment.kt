@@ -11,6 +11,7 @@ import android.text.SpannableStringBuilder
 import android.text.SpannedString
 import android.text.style.BulletSpan
 import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
 import android.util.Log
 import android.view.*
 import androidx.core.content.ContextCompat
@@ -180,68 +181,41 @@ class PictureOfTheDayFragment : Fragment() {
 
 
                 // val text = requireActivity().resources.getText(R.string.test_html).toString()
-                val text = "My text <ul><li>bullet one</li><li>bullet two</li>"
-                binding.lifeHack.explanation.text = Html.fromHtml(text)
-                val textSpannable = "My text \nbullet one \nbullet two"
-
+                //val text = "My text <ul><li>bullet one</li><li>bullet two</li>"
+                //binding.lifeHack.explanation.text = Html.fromHtml(text)
+                //val textSpannable = "My text \nbullet one \nbullet two"
+                val textSpannable = pictureOfTheDayAppState.pictureOfTheDayResponseData.explanation
 
                 val spannedString: SpannedString
-                val spannableString: SpannableString = SpannableString(textSpannable)
-                val spannableStringBuilder: SpannableStringBuilder
-
-                /*val split = textSpannable.split("\n").toMutableList()
-                repeat(split.size){
-                    if(it>0)
-                    split[it] = "/n${split[it]}"
-                }*/
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-
-                    /* var counter = 0
-                     split.forEach {
-                         val startPosition = counter
-                         val endPosition = counter+it.length
-                         spannableString.setSpan(BulletSpan(20, ContextCompat.getColor(requireContext(),R.color.red_700),10),
-                             counter,counter+it.length,SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE)
-                         counter+=it.length
-                     }*/
+                //val spannableString:SpannableString = SpannableString(textSpannable)
+                val spannableStringBuilder: SpannableStringBuilder =
+                    SpannableStringBuilder(textSpannable)
 
 
 
-
-                    spannableString.setSpan(
-                        BulletSpan(
-                            20,
-                            ContextCompat.getColor(requireContext(), R.color.red_700),
-                            10
-                        ),
-                        9, 18, SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                    spannableString.setSpan(
-                        BulletSpan(
-                            20,
-                            ContextCompat.getColor(requireContext(), R.color.red_700),
-                            10
-                        ),
-                        21, textSpannable.length, SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                } else {
-                    spannableString.setSpan(
-                        BulletSpan(20, ContextCompat.getColor(requireContext(), R.color.red_700)),
-                        9, 19, SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
-
-                spannableString.setSpan(
-                    ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.red_700)),
-                    8, 19, SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE
+                spannableStringBuilder.setSpan(
+                    RelativeSizeSpan(2f),
+                    0,
+                    spannableStringBuilder.length,
+                    SpannedString.SPAN_EXCLUSIVE_INCLUSIVE
                 )
 
-                spannableString.setSpan(
+                //spannableString.is
+
+                spannableStringBuilder.setSpan(
+                    ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.red_700)),
+                    8, 19, SpannedString.SPAN_EXCLUSIVE_INCLUSIVE
+                )
+                spannableStringBuilder.insert(19, "NEW")
+                //spannableStringBuilder.insert(8,"NEW")
+
+
+                spannableStringBuilder.setSpan(
                     ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.blue)),
                     21, textSpannable.length, SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
-                binding.lifeHack.explanation.text = spannableString
+                spannedString = SpannedString(spannableStringBuilder)
+                binding.lifeHack.explanation.text = spannedString
             }
         }
     }
