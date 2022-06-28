@@ -5,6 +5,8 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Html
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
@@ -12,10 +14,13 @@ import android.text.SpannedString
 import android.text.style.BulletSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
+import android.text.style.TypefaceSpan
 import android.util.Log
 import android.view.*
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.provider.FontRequest
+import androidx.core.provider.FontsContractCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -189,8 +194,12 @@ class PictureOfTheDayFragment : Fragment() {
 
                 val spannedString: SpannedString
                 //val spannableString:SpannableString = SpannableString(textSpannable)
-                var spannableStringBuilder:SpannableStringBuilder= SpannableStringBuilder(textSpannable)
-                binding.lifeHack.explanation.setText(spannableStringBuilder, TextView.BufferType.EDITABLE)
+                var spannableStringBuilder: SpannableStringBuilder =
+                    SpannableStringBuilder(textSpannable)
+                binding.lifeHack.explanation.setText(
+                    spannableStringBuilder,
+                    TextView.BufferType.EDITABLE
+                )
                 spannableStringBuilder = binding.lifeHack.explanation.text as SpannableStringBuilder
 
 
@@ -215,6 +224,38 @@ class PictureOfTheDayFragment : Fragment() {
                 spannableStringBuilder.setSpan(
                     ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.blue)),
                     21, textSpannable.length, SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+
+                val request = FontRequest(
+                    "com.google.android.gms.fonts",
+                    "com.google.android.gms",
+                    //  "name=Roboto&amp;weight=100",
+                    "Aguafina Script",
+                    R.array.com_google_android_gms_fonts_certs
+                )
+
+
+                FontsContractCompat.requestFont(
+                    requireContext(),
+                    request,
+                    object : FontsContractCompat.FontRequestCallback() {
+                        override fun onTypefaceRetrieved(typeface: Typeface?) {
+                            // super.onTypefaceRetrieved(typeface)
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                                typeface?.let {
+                                    spannableStringBuilder.setSpan(
+                                        TypefaceSpan(it),
+                                        21,
+                                        textSpannable.length,
+                                        SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE
+                                    )
+                                }
+                            } else {
+                                binding.lifeHack.explanation.typeface = typeface
+                            }
+                        }
+                    },
+                    Handler(Looper.getMainLooper())
                 )
             }
         }
