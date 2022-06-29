@@ -14,7 +14,6 @@
     <color name="red_700">#D72A2A</color>
     <color name="red_800">#C82424</color>
     <color name="red_900">#AE0B0B</color>
-    <color name="color_gray">#66000000</color>
     <color name="background">#B0BAE6</color>
     <color name="color_chip">#1E517A</color>
     <color name="color_on_primary">#FFFFFFFF</color>
@@ -32,4 +31,18 @@
     <color name="colorAccent40Alfa">#66FBC7CC</color>
     <color name="ripple_color_unselected">#673AB7</color>
     <color name="ripple_color_selected">?superColorPrimary</color>
+
+    <!--    Урок 8-->
+    <color name="color_gray">#808080</color>
+
+
+    <color name="textDarkPrimary">#DE000000</color> <!--DE for %87 opacity-->
+    <color name="textDarkSecondary">#8A000000</color> <!--8A for %54 opacity-->
+    <color name="textDarkDisabled">#61000000</color> <!--61 for %38 opacity-->
+
+    <color name="textLightPrimary">#FFFFFF</color> <!--%100 opacity-->
+    <color name="textLightSecondary">#B2FFFFFF</color> <!--B2 for %70 opacity-->
+    <color name="textLightDisabled">#80FFFFFF</color> <!--80 for %50 opacity-->
+    <color name="textLightDisabledDEPRECATED">#4CFFFFFF</color>
+
 </resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/fragment_ux_text"
+        android:icon="@drawable/ic_earth"
+        android:title="@string/ux_text"
+        app:tooltipText="fragment_ux " />
+    <item
+        android:id="@+id/fragment_ux_button"
+        android:icon="@drawable/ic_earth"
+        android:title="@string/ux_button"
+        app:tooltipText="fragment_ux " />
+    <item
+        android:id="@+id/fragment_ux_tutorial"
+        android:icon="@drawable/ic_earth"
+        android:title="@string/ux_tutorial"
+        app:tooltipText="fragment_ux " />
+
+</menu>
