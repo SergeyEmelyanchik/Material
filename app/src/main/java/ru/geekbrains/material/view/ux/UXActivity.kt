@@ -18,10 +18,10 @@ class UXActivity : AppCompatActivity() {
         binding.bottomNavigationViewUX.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.fragment_ux_text -> {
-                    navigateTo(TextUXFragment.newInstance())
+                    navigateTo(TextUXFragment())
                 }
                 R.id.fragment_ux_button -> {
-                    navigateTo(ButtonUXFragment.newInstance())
+                    navigateTo(ButtonUXFragment())
                 }
                 R.id.fragment_ux_tutorial->{
                     navigateTo(TutorialButtonUXFragment.newInstance())
