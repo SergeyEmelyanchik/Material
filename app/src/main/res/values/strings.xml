@@ -128,6 +128,7 @@
     <string name="ux_text">ux_text</string>
     <string name="ux_button">ux_button</string>
     <string name="ux_tutorial">ux_tutorial</string>
+    <string name="c_ompany_name">(c) сompany name</string>
 
 
 </resources>

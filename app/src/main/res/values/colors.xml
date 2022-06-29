@@ -31,6 +31,7 @@
     <color name="colorAccent40Alfa">#66FBC7CC</color>
     <color name="ripple_color_unselected">#673AB7</color>
     <color name="ripple_color_selected">?superColorPrimary</color>
+    <color name="color_gray_main">#3D3D3D</color>
 
     <!--    Урок 8-->
     <color name="color_gray">#808080</color>
