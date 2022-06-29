@@ -33,8 +33,13 @@ class UXActivity : AppCompatActivity() {
         binding.bottomNavigationViewUX.selectedItemId = R.id.fragment_ux_text
     }
 
-    fun navigateTo(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+    private fun navigateTo(fragment: Fragment){
+        supportFragmentManager.beginTransaction().setCustomAnimations(
+            R.anim.slide_in,
+            R.anim.fade_out,
+            R.anim.fade_in,
+            R.anim.slide_out
+        ).replace(R.id.container,fragment).commit()
     }
 
 }
