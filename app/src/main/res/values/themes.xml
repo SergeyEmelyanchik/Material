@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="MyBaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="MyBaseThemeForTestDynamicColor" parent="Theme.Material3.DynamicColors.DayNight"></style>
+        <style name="MyBaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="android:navigationBarColor">?superColor</item>
         <item name="colorPrimary">?superColor</item>
